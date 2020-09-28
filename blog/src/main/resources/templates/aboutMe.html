@@ -1,0 +1,150 @@
+<!DOCTYPE >
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<!--设置移动端的自由缩放 -->
+		<meta name="viewport" content="width=devicce-width,initial-scale=1.0" />
+		<title>bolg关于我</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" />
+		<link rel="stylesheet" th:href="@{/css/me.css}" />
+	</head>
+	<body>
+		<!--导航 -->
+		<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small div1">
+			<div class="ui container">
+				<div class="ui inverted secondary stackable menu">
+					<a th:href="@{/}">
+						<h2 class="ui  header item" style="color: yellow">Warriors</h2>
+					</a>
+					<a href="index.html" th:href="@{/}" class=" m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+					<a href="types.html" th:href="@{/types/-1}" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+					<a href="tags.html"  th:href="@{/tags/-1}"  class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+					<a href="messages.html"  th:href="@{/message}"  class="m-item item m-mobile-hide"><i class="envelope outline icon"></i>留言</a>
+					<a href="archives.html"  th:href="@{/archives}"  class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+					<a href="aboutMe.html"  th:href="@{/aboutMe}"  class="active m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+					<div class="right m-item item m-mobile-hide">
+						<form name="search" action="#" th:action="@{/search}" target="_blank">
+							<div class="ui icon inverted transparent input">
+								<input type="text" placeholder="搜索..." name="query">
+								<i onclick="document.forms['search'].submit()" class="search link icon"></i>
+							</div>
+						</form>
+					</div>
+					<div class="column m-item item m-mobile-hide" ><i class="user icon"></i><a href="#" th:href="@{/admin}">后台管理</a></div>
+				</div>
+			</div>
+			<a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+				<i class="sidebar icon"></i>
+			</a>
+		</nav>
+		<!--音乐播放器-->
+		<div class="div2">
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=52 src="//music.163.com/outchain/player?type=2&id=34274470&auto=1&height=32"></iframe>
+		</div>
+		<!-- 中间内容-->
+		<div class="m-container m-padded-tb-big div2" >
+			<div class="ui container">
+				<div class="ui stackable grid">
+					<div class="eleven wide column">
+						<div class="ui segment">
+							<img src="https://s1.ax1x.com/2020/06/12/tXSFDf.jpg" alt="" class="ui rounded image"  style="width: 650px;height: 850px" >
+						</div>
+					</div>
+					<div class="five wide column">
+						<div class="ui top attached segment">
+							<div class="ui header">关于我</div>
+						</div>
+						<div class="ui attached segment">
+							<p class="m-text " th:text="#{footer.introduce}">这是我的个人介绍这是我的个人介绍这是我的个人介绍这是我的个人介绍这是我的个人介绍这是我的个人介绍这是我的个人介绍这是我的个人介绍这是我的个人介绍</p>
+						</div>
+						<div class="ui attached segment">
+							<div class="ui basic orange left pointing label m-margin-tb-tiny">编程</div>
+							<div class="ui basic orange left pointing label m-margin-tb-tiny">游戏</div>
+							<div class="ui basic orange left pointing label m-margin-tb-tiny">篮球</div>
+							<div class="ui basic orange left pointing label m-margin-tb-tiny">电影</div>
+							<div class="ui basic orange left pointing label m-margin-tb-tiny">java</div>
+						</div>
+
+						<div class="ui bottom attached segment">
+							<a href="#" class="ui circular icon button"><i class="github icon"></i></a>
+							<a href="#" class="ui wechat circular icon button"><i class="wechat icon"></i></a>
+							<a href="#" class="ui qq circular icon button" data-content="1436530676" data-position="bottom center"><i class="qq icon"></i></a>
+						</div>
+						<div class="ui wechatQR flowing popup transition hidden">
+							<img th:src="@{/image/wechat.jpg}" alt="" class="ui rounded image" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 底部换行，增加间距 -->
+		<br/>
+		<br/>
+
+
+		<!-- 底部内容fotter-->
+		<footer th:replace="_fragment :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+			<div class="ui container" align="center">
+				<div class="ui inverted divided stackable grid">
+					<!--微信二维码 -->
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<div class="item">
+								<img th:src="@{/image/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px;">
+							</div>
+						</div>
+					</div>
+					<!-- 最新博客-->
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+							<a href="#" class="item">用户故事（User story）</a>
+							<a href="#" class="item">用户故事（User story）</a>
+							<a href="#" class="item">用户故事（User story）</a>
+						</div>
+					</div>
+					<!-- 联系我-->
+					<div class="four wide column">
+						<div class="ui inverted link list">
+							<h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+							<a href="#" class="item">QQ：1797007941</a>
+							<a href="#" class="item">微信公众号：科技毒瘤君</a>
+							<a href="#" class="item">Email：www.beiwangshan@icloud.com</a>
+						</div>
+					</div>
+					<!--个人简介 -->
+					<div class="six wide column">
+						<h4 class="ui inverted header m-text-thin m-text-spaced">EasyStudy</h4>
+						<p class="m-text-thin m-text-spaced m-opactiy-mini">这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍</p>
+					</div>
+				</div>
+				<div class="ui inverted section divider"></div>
+				<div style="width:300px;margin:0 auto; padding:20px 0;">
+					<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102003690" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img
+						 src="" style="float:left;" />
+						<p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">鄂公网安备 42011102003690号</p>
+					</a>
+				</div>
+				<p class="m-text-thin m-text-spaced m-opactiy-tiny">Copyright @ 2020-2020 EasyStudy Designed by 科技毒瘤君 </p>
+			</div>
+		</footer>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+		<script>
+			// 手机端隐藏菜单
+			$('.menu.toggle').click(function(){
+				$('.m-item').toggleClass('m-mobile-hide');
+			});
+			// 显示QQ
+			$('.qq').popup();
+			// 显示微信二维码
+			$('.wechat').popup({
+				popup : $('.wechatQR'),
+				position : 'bottom center'
+			});
+		</script>
+		<script th:replace="_fragment :: newBlog"></script>
+	</body>
+</html>

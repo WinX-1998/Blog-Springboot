@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
+	<head>
+		<meta charset="utf-8">
+		<!--设置移动端的自由缩放 -->
+		<meta name="viewport" content="width=devicce-width,initial-scale=1.0" />
+		<title>博客管理登录</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" />
+		<link rel="stylesheet" th:href="@{/css/me.css}" />
+	</head>
+	<body>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+<div class="m-container-small m-padded-tb-massive" style="max-width:30em !important;">
+	<div class="ur container">
+		<div class="ui middle aligned center aligned grid">
+			<div class="column">
+				<h2 class="ui teal image header">
+					<div class="content">
+						登录管理后台
+					</div>
+				</h2>
+				<form class="ui large form" method="post" action="#" th:action="@{admin/login}">
+					<div class="ui  segment">
+						<div class="field">
+							<div class="ui left icon input">
+								<i class="user icon"></i>
+								<input type="text" name="username" placeholder="用户名">
+							</div>
+						</div>
+						<div class="field">
+							<div class="ui left icon input">
+								<i class="lock icon"></i>
+								<input type="password" name="password" placeholder="密码">
+							</div>
+						</div>
+						<button class="ui fluid large teal submit button">登录</button>
+					</div>
+				</form>
+				<!--<div class="ui error mini message"  th:if="${#httpServletRequest.getParameter('errorMessage')}!=null" >
+					<div class="ui mini negative message">
+					<span >[[${#httpServletRequest.getParameter('errorMessage')}]]</span>
+					</div>
+				</div>-->
+					<div class="ui mini negative message " style="font-size: small"
+						 th:unless="${#strings.isEmpty(errorMessage)}" th:text="${errorMessage}">
+					</div>
+
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+	<script>
+		// 表单验证
+		$('.ui.form').form({
+			fields : {
+				username : {
+					identifier : 'username',
+					rules : [{
+						type : 'empty',
+						prompt : '请输入用户名'
+					}]
+				},
+				password : {
+					identifier : 'password',
+					rules : [{
+						type : 'empty',
+						prompt : '请输入密码'
+					}]
+				}
+			}
+		});
+	</script>
+	</body>
+</html>

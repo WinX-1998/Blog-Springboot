@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 底部内容fotter-->
+<footer class="ui inverted vertical div2 segment m-padded-tb-massive" th:fragment="footer" >
+    <div class="ui container" align="center">
+        <div class="ui inverted divided stackable grid">
+            <!--微信二维码 -->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img th:src="@{/image/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px;">
+                    </div>
+                </div>
+            </div>
+            <!-- 最新博客-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div id="newBlog-container">
+                <div class="ui inverted link list" th:fragment="newBlogList" >
+                    <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" class="item" th:each="blog:${blogs}" th:text="${blog.title}">用户故事（User story）</a>
+                </div>
+                </div>
+            </div>
+            <!-- 联系我-->
+            <div class="four wide column">
+                <div class="ui inverted link list">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                    <a href="#" class="item" th:text="|QQ:#{footer.qq}"  th:href="@{/aboutMe}">QQ：1797007941</a>
+                    <a href="#" class="item" th:text="|email:#{footer.email}|" th:href="@{/aboutMe}" >Email：www.beiwangshan@icloud.com</a>
+                </div>
+            </div>
+            <!--个人简介 -->
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced" th:text="#{footer.title}">EasyStudy</h4>
+                <p class="m-text-thin m-text-spaced m-opactiy-mini" th:text="#{footer.introduce}">这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <div style="width:300px;margin:0 auto; padding:20px 0;">
+            <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102003690" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img
+                    src="" style="float:left;" />
+                <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">鄂公网安备 42011102003690号</p>
+            </a>
+        </div>
+        <p class="m-text-thin m-text-spaced m-opactiy-tiny">Copyright @ 2020-2020 BLOG Designed by Warriors </p>
+    </div>
+    <!-- ww -->
+    <script type="text/javascript">
+        WIDGET = {FID: 'TWaoho3350'}
+    </script>
+    <script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
+</footer>
+<script th:fragment="newBlog">
+        $("#newBlog-container").load("/newBlogList");
+</script>
+<!-- weather -->
+<script type="text/javascript">
+    WIDGET = {FID: 'qzwgkOQcr3'}
+</script>
+<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
+</body>
+</html>

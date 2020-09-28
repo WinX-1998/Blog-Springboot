@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<!--设置移动端的自由缩放 -->
+	<meta name="viewport" content="width=devicce-width,initial-scale=1.0" />
+	<title>blog详情页</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" />
+	<link rel="stylesheet" th:href="@{/css/animate.min.css}"/>
+	<link rel="stylesheet" th:href="@{/lib/prism/prism.css}"/>
+	<link rel="stylesheet" th:href="@{/lib/tocbot/tocbot.css}" />
+	<link rel="stylesheet" th:href="@{/css/me.css}"/>
+
+</head>
+	<body>
+
+		<!--导航 -->
+		<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small div1">
+			<div class="ui container">
+				<div class="ui inverted secondary stackable menu">
+					<a href="index.html" th:href="@{/}">
+						<h2 class="ui  header item" style="color: yellow">Warriors</h2>
+					</a>
+					<a href="index.html" th:href="@{/}" class=" m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+					<a href="types.html" th:href="@{/types/-1}" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+					<a href="tags.html"  th:href="@{/tags/-1}"  class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+					<a href="messages.html"  th:href="@{/message}"  class="active m-item item m-mobile-hide"><i class="envelope outline icon"></i>留言</a>
+					<a href="archives.html"  th:href="@{/archives}"  class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+					<a href="aboutMe.html"  th:href="@{/aboutMe}"  class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+					<div class="right m-item item m-mobile-hide">
+						<form name="search" action="#" th:action="@{/search}" target="_blank">
+							<div class="ui icon inverted transparent input">
+								<input type="text" placeholder="搜索..." name="query">
+								<i onclick="document.forms['search'].submit()" class="search link icon"></i>
+							</div>
+						</form>
+					</div>
+					<div class="column m-item item m-mobile-hide" ><i class="user icon"></i><a href="#" th:href="@{/admin}">后台管理</a></div>
+				</div>
+			</div>
+			<a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+				<i class="sidebar icon"></i>
+			</a>
+		</nav>
+
+		<!--音乐播放器-->
+		<div class="div2">
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=52 src="//music.163.com/outchain/player?type=2&id=34274470&auto=1&height=32"></iframe>
+		</div>
+		<!-- 中间内容-->
+		<div id="waypoint" class="m-container-small m-padded-tb-big animated fadeIn">
+			<div class="ui container">
+				<!-- 用户留言区域 -->
+				<div class="ui bottom attached segment">
+					<h2 class="ui dividing header">留言</h2>
+					<!-- 提交留言区域 -->
+					<div id="message-form"  class="ui form">
+						<input type="hidden" name="parentMessage.id" value="-1">
+						<!-- 留言内容输入 -->
+						<div class="field">
+							<textarea name="content" placeholder="请输入评论信息..."></textarea>
+						</div>
+						<!-- 留言用户基本信息 -->
+						<div class="fields">
+							<div class="field m-mobile-wide m-marign-bottom-small">
+								<div class="ui left icon input">
+									<i class="user icon"></i>
+									<input type="text" name="nickname" placeholder="姓名"  th:value="${session.user}!=null ? ${session.user.nickname}"/>
+								</div>
+							</div>
+							<div class="field m-mobile-wide m-marign-bottom-small">
+								<div class="ui left icon input">
+									<i class="user icon"></i>
+									<input type="text" name="email" placeholder="邮箱" th:value="${session.user}!=null ? ${session.user.email}"/>
+								</div>
+							</div>
+							<div class="field m-marign-bottom-small m-mobile-wide">
+								<button id="messagepost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+							</div>
+						</div>
+					</div>
+				<!-- 留言区域列表 -->
+
+				<div id="message-container" class="ui teal segment">
+					<div th:fragment="messageList">
+					<div class="ui comments" style="max-width: 100%">
+					  <div class="comment" th:each="message : ${page.content}">
+					    <a class="avatar">
+					      <img src="https://i.picsum.photos/id/1005/100/100.jpg" th:src="@{${message.avatar}}">
+					    </a>
+					    <div class="content">
+					      <a class="author" th:text="${message.nickname}">马特</a>
+							<div class="ui mini basic blue left pointing label m-padded-mini" th:if="!${message.adminMessage}"> 游客</div>
+							<div class="ui mini basic teal left pointing label m-padded-mini" th:if="${message.adminMessage}"> 博主</div>
+					      <div class="metadata">
+					        <span class="date" th:text="${#dates.format(message.createTime,'yyyy-MM-dd HH:mm')}">今天下午5:42</span>
+					      </div>
+					      <div class="text" th:text="${message.content}">
+					        多么艺术！
+					     </div>
+					      <div class="actions">
+					        <a class="reply" data-messageid="1" data-messagenickname="matty" th:attr="data-messageid=${message.id},data-messagenickname=${message.nickname}" onclick="reply(this)">回复</a>
+					      </div>
+					    </div>
+						  <div class="comments" th:if="${#arrays.length(message.replyMessages)}>0">
+							  <div class="comment" th:each="reply : ${message.replyMessages}">
+								  <a class="avatar">
+									  <img src="https://i.picsum.photos/id/1005/100/100.jpg" th:src="@{${reply.avatar}}">
+								  </a>
+								  <div class="content">
+									  <a class="author" >
+										  <span th:text="${reply.nickname}">Matt</span>
+										  <div class="ui mini basic blue left pointing label m-padded-mini" th:if="!${reply.adminMessage}"> 游客</div>
+										  <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${reply.adminMessage}"> 博主</div>
+										  <span th:text="|@ ${reply.parentMessage.nickname}|" class="m-teal">@ 小白</span></a>
+									  <div class="metadata">
+										  <span class="date" th:text="${#dates.format(reply.createTime,'yyyy-MM-dd HH:mm')}">今天下午5:42</span>
+									  </div>
+									  <div class="text" th:text="${reply.content}">
+										  多么艺术！
+									  </div>
+									  <div class="actions">
+										  <a class="reply" data-messageid="1" data-messagenickname="matty" th:attr="data-messageid=${reply.id},data-messagenickname=${reply.nickname}" onclick="reply(this)">回复</a>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+						<!-- 底部翻页 -->
+						<div class="ui bottom attached segment">
+							<div class="ui middle aligned two column grid" th:if="${page.totalPages}>1">
+								<div class="column">
+									<a th:href="@{/message(page=${page.number-1})}" class=" ui mini teal basic button" th:unless="${page.first}">上一页</a>
+								</div>
+								<div class="right aligned column">
+									<a th:href="@{/message(page=${page.number+1})}" class=" ui mini teal basic button" th:unless="${page.last}">下一页</a>
+								</div>
+								<input type="hidden" th:value="${page.number}" id="pageNumber">
+								</input>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<!-- 平滑滚动jQuery.srcollTo -->
+		<div id="toolbar" class="animated rubberBand m-padded m-fixed m-right-bottom " style="display: none;">
+			<div class="ui vertical icon buttons ">
+				<button type="button" class="ui toc teal button">目录</button>
+				<a href="#comment-container" class="ui teal button">留言</a>
+				<button class="ui wechat icon button"><i class="wechat icon"></i></button>
+				<div id="toTop-button" class="ui icon  button"><i class="chevron up icon"></i></div>
+			</div>
+		</div>
+		<!-- 弹出二维码 -->
+		<div id="qrcode" class="ui wechat-qr flowing popup transition hidden " style="width: 130px !important;">
+			<!-- <img src="static/image/wechat.jpg" alt="" class="ui rounded image" style="width: 110px;"> -->
+		</div>
+		<!-- 弹出目录 -->
+		<div class="ui toc-container flowing popup transition hidden" style="width: 250px;">
+			<h3>生成的文章目录</h3>
+			<ol class="js-toc">
+			</ol>
+		</div>
+		
+		<!-- 底部换行，增加间距 -->
+		<br/>
+		<br/>
+		<br/>
+		<!-- 底部内容fotter-->
+		<footer th:replace="_fragment :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+			<div class="ui container" align="center">
+				<div class="ui inverted divided stackable grid">
+					<!--微信二维码 -->
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<div class="item">
+								<img th:src="@{/image/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px;">
+							</div>
+						</div>
+					</div>
+					<!-- 最新博客-->
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+							<a href="#" class="item">用户故事（User story）</a>
+							<a href="#" class="item">用户故事（User story）</a>
+							<a href="#" class="item">用户故事（User story）</a>
+						</div>
+					</div>
+					<!-- 联系我-->
+					<div class="four wide column">
+						<div class="ui inverted link list">
+							<h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+							<a href="#" class="item">QQ：1797007941</a>
+							<a href="#" class="item">微信公众号：科技毒瘤君</a>
+							<a href="#" class="item">Email：www.beiwangshan@icloud.com</a>
+						</div>
+					</div>
+					<!--个人简介 -->
+					<div class="six wide column">
+						<h4 class="ui inverted header m-text-thin m-text-spaced">EasyStudy</h4>
+						<p class="m-text-thin m-text-spaced m-opactiy-mini">这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍</p>
+					</div>
+				</div>
+				<div class="ui inverted section divider"></div>
+				<div style="width:300px;margin:0 auto; padding:20px 0;">
+					<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102003690" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img
+							src="" style="float:left;" />
+						<p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">鄂公网安备 42011102003690号</p>
+					</a>
+				</div>
+				<p class="m-text-thin m-text-spaced m-opactiy-tiny">Copyright @ 2020-2020 EasyStudy Designed by 科技毒瘤君 </p>
+			</div>
+		</footer>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+		<!-- <script src="https://cdn.bootcss.com/waypoints/4.0.1/jquery.waypoints.js"></script> -->
+		<script th:src="@{/lib/prism/prism.js}"></script>
+		<script th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+		<script th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+		<script th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+		<script>
+			// 手机端隐藏菜单
+			$('.menu.toggle').click(function(){
+				$('.m-item').toggleClass('m-mobile-hide');
+			});
+			// 点击赞赏,显示二维码
+			$('#payButton').popup({
+				popup : $('.payQR.popup'),
+				on : 'click',
+				position : 'bottom center'
+			});
+
+
+			// 表单验证
+			$('.ui.form').form({
+				fields : {
+					content : {
+						identifier : 'content',
+						rules : [{
+							type : 'empty',
+							prompt : '请输入评论内容'
+						}]
+					},
+					nickname : {
+						identifier : 'nickname',
+						rules : [{
+							type : 'empty',
+							prompt : '请输入昵称'
+						}]
+					},
+					Email : {
+						identifier : 'email',
+						rules : [{
+							type : 'empty',
+							prompt : '请输入正确邮箱'
+						}]
+					},
+				}
+			});
+
+			$("#messagepost-btn").click(function () {
+				var boo=$('.ui.form').form('validate form');
+				if(boo){
+					console.log("校验成功");
+					postData();
+				}else{
+					console.log("校验失败")
+				}
+			});
+
+
+
+
+			var url=URL.toString();
+			function postData(){
+				$("#message-container").load("/postMessage",{
+					"parentMessage.id":$("[name='parentMessage.id']").val(),
+					"nickname":$("[name='nickname']").val(),
+					"email":$("[name='email']").val(),
+					"content":$("[name='content']").val(),
+					"page":$('#pageNumber').val()
+				},function (responseTxt,statusTxt,xhr) {
+					clearContent();
+				})
+			}
+
+			function clearContent(){
+				$("[name='content']").val('');
+				$("[name='parentMessage.id']").val(-1);
+				$("[name='content']").attr("placeholder","请输入评论内容");
+			}
+
+			function reply(obj){
+				var messageId=$(obj).data('messageid');
+				var messageNickname=$(obj).data('messagenickname');
+				$("[name='content']").attr("placeholder","@"+messageNickname).focus();
+				$("[name='parentMessage.id']").val(messageId);
+				$(window.scrollTo($('#message-form')),500);
+			}
+
+
+
+
+
+			// 初始化目录.使用插件
+			tocbot.init({
+			  // Where to render the table of contents.
+			  tocSelector: '.js-toc',
+			  // Where to grab the headings to build the table of contents.
+			  contentSelector: '.js-toc-content',
+			  // Which headings to grab inside of the contentSelector element.
+			  headingSelector: 'h1, h2, h3',
+			  // For headings inside relative or absolute positioned containers within content.
+			  hasInnerContainers: true,
+			});
+
+			// 点击目录,显示目录
+			$('.toc.button').popup({
+				popup : $('.toc-container.popup'),
+				on : 'click',
+				position : 'left center'
+			});
+			// 显示微信二维码
+			$('.wechat').popup ({
+				popup : $('.wechat-qr'),
+				position : 'left center'
+			});
+			var qrcode = new QRCode("qrcode", {
+			    text: "http://jindo.dev.naver.com/collie",
+			    width: 110,
+			    height: 110,
+			    colorDark : "#000000",
+			    colorLight : "#ffffff",
+			    correctLevel : QRCode.CorrectLevel.H
+			});
+			// 平滑滚动至头部
+			$('#toTop-button').click(function(){
+				$(window).scrollTo(0,500);
+			});
+
+			// 滚动检测
+			var waypoint = new Waypoint({
+			  element: document.getElementById('waypoint'),
+			  handler: function(direction) {
+				  if(direction == 'down'){
+					  $('#toolbar').show(500);
+				  }else{
+					  $('#toolbar').hide(500);
+				  }
+			  console.log('Scrolled to waypoint!' + direction);
+			  }
+			})
+		</script>
+	</body>
+</html>

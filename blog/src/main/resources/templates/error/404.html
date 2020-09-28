@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!--设置移动端的自由缩放 -->
+    <meta name="viewport" content="width=devicce-width,initial-scale=1.0" />
+    <title>bolg详情页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" />
+    <link rel="stylesheet" th:href="@{/css/typo.css} "/>
+    <link rel="stylesheet" th:href="@{/css/animate.min.css}"/>
+    <link rel="stylesheet" th:href="@{/lib/prism/prism.css}"/>
+    <link rel="stylesheet" th:href="@{/lib/tocbot/tocbot.css}" />
+    <link rel="stylesheet" th:href="@{/css/me.css}"/>
+</head>
+<body>
+<!--导航 -->
+<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="index.html">
+                <h2 class="ui teal header item">EasyStudy</h2>
+            </a>
+            <a href="index.html" class=" m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="types.html" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="tags.html" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="archives.html" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="aboutMe.html" class=" m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon inverted transparent input">
+                    <input type="text" placeholder="搜索...">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+<div class="m-margin-top-small m-padded-tb-massive">
+<div class="ui error message m-padded-tb-massive">
+<div class="ui container">
+<h2>404</h2>
+<p>对不起，你访问的页面不存在</p>
+</div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+<footer class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui container" align="center">
+        <div class="ui inverted divided stackable grid">
+            <!--微信二维码 -->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img th:src="@{/image/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px;">
+                    </div>
+                </div>
+            </div>
+            <!-- 最新博客-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                    <a href="#" class="item">用户故事（User story）</a>
+                    <a href="#" class="item">用户故事（User story）</a>
+                    <a href="#" class="item">用户故事（User story）</a>
+                </div>
+            </div>
+            <!-- 联系我-->
+            <div class="four wide column">
+                <div class="ui inverted link list">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                    <a href="#" class="item">QQ：1797007941</a>
+                    <a href="#" class="item">微信公众号：科技毒瘤君</a>
+                    <a href="#" class="item">Email：www.beiwangshan@icloud.com</a>
+                </div>
+            </div>
+            <!--个人简介 -->
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">EasyStudy</h4>
+                <p class="m-text-thin m-text-spaced m-opactiy-mini">这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍这是我的个人博客介绍</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <div style="width:300px;margin:0 auto; padding:20px 0;">
+            <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102003690" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img
+                    src="" style="float:left;" />
+                <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">鄂公网安备 42011102003690号</p>
+            </a>
+        </div>
+        <p class="m-text-thin m-text-spaced m-opactiy-tiny">Copyright @ 2020-2020 EasyStudy Designed by 科技毒瘤君 </p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+<!-- <script src="https://cdn.bootcss.com/waypoints/4.0.1/jquery.waypoints.js"></script> -->
+<script th:src="@{/lib/prism/prism.js}"></script>
+<script th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+<script th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+<script>
+    // 手机端隐藏菜单
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    // 点击赞赏,显示二维码
+    $('#payButton').popup({
+        popup : $('.payQR.popup'),
+        on : 'click',
+        position : 'bottom center'
+    });
+
+    // 初始化目录.使用插件
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.js-toc-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+
+    // 点击目录,显示目录
+    $('.toc.button').popup({
+        popup : $('.toc-container.popup'),
+        on : 'click',
+        position : 'left center'
+    });
+    // 显示微信二维码
+    $('.wechat').popup ({
+        popup : $('.wechat-qr'),
+        position : 'left center'
+    });
+    var qrcode = new QRCode("qrcode", {
+        text: "http://jindo.dev.naver.com/collie",
+        width: 110,
+        height: 110,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+    // 平滑滚动至头部
+    $('#toTop-button').click(function(){
+        $(window).scrollTo(0,500);
+    });
+
+    // 滚动检测
+    var waypoint = new Waypoint({
+        element: document.getElementById('waypoint'),
+        handler: function(direction) {
+            if(direction == 'down'){
+                $('#toolbar').show(500);
+            }else{
+                $('#toolbar').hide(500);
+            }
+            console.log('Scrolled to waypoint!' + direction);
+        }
+    })
+</script>
+</body>
+</html>
